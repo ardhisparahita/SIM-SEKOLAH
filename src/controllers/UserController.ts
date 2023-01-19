@@ -15,11 +15,12 @@ class UserController implements IController {
 
   async create(req: Request, res: Response): Promise<Response> {
     try {
-      const {username, password} = req.body
+      const {username, password, role} = req.body
       
       const response = await db.user.create({
         username,
-        password
+        password,
+        role
       })
       return res.json({
         message: "create user successfully",
@@ -50,12 +51,13 @@ class UserController implements IController {
   
   async update(req: Request, res: Response): Promise<Response> {
     const {id} = req.params
-    const {username, password} = req.body
+    const {username, password, role} = req.body
 
     await db.user.update(
       {
         username,
         password,
+        role
       },
       {
         where: {
